@@ -5,7 +5,8 @@ namespace App\Controller\api;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use symfony\Component\Routing\Annotation\Route;
-use App\Entity\User;
+use Symfony\Component\Security\Core\Security;
+
 
 class LoginController extends  AbstractController
 {                          
@@ -18,12 +19,6 @@ class LoginController extends  AbstractController
     {
             $user = $this->getUser();
 
-            $userData = [
-                'email'=>$user->getEmail(),
-                'first_name'=>$user->getFirstName(),
-                'last_name'=>$user->getLastName(),
-
-            ];
-            return new JsonResponse(json_encode($userData, JSON_THROW_ON_ERROR));
+            return new JsonResponse(json_encode("logged in",JSON_THROW_ON_ERROR));
     }
 }
