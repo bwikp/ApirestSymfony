@@ -35,6 +35,9 @@
             "./migrations/.gitignore"
         ]
     },
+    "jms/serializer-bundle": {
+        "version": "0.10"
+    },
     "phpunit/phpunit": {
         "version": "9.6",
         "recipe": {
