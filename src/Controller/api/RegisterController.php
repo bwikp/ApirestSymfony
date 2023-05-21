@@ -10,7 +10,7 @@ use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use App\Security\SecurtiryAuthAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
-use Symfony\Component\Serializer\Serializer;
+
 class RegisterController extends AbstractController
 {
     #[Route('/api/register', name: 'api_register',methods:["POST"])]
