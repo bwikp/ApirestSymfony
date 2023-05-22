@@ -36,7 +36,6 @@ class RegisterController extends AbstractController
                 }
                     
                 $getPassWord = $newUser->getPassWord();
-                $user = $this->getUser();  
 
                         $newUser->setPassword(
                             $userPasswordHasher->hashPassword(
