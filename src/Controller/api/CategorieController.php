@@ -47,6 +47,7 @@ class CategorieController extends AbstractController
 
     public function editCategory():Response
         {
+            
             return $this->json("succesfuly edited");
         }
 
