@@ -1,4 +1,11 @@
 security:
+    # config/packages/security.yaml
+    # ...
+    access_control:
+        #
+        # the 'ips' option supports IP addresses and subnet masks
+        - { path: '^/api/categorie', roles: PUBLIC_ACCESS, ips: [127.0.0.1, ::1, 192.168.0.1/24] }
+        - { path: '^/api/categorie', roles: ROLE_NO_ACCESS }
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
