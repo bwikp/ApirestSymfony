@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Entity\Category;
 
 class CategorieController extends AbstractController
-{
+{  
     #[Route(path: '/api/categorie/new', name: 'api_categorie_add', methods: ['POST'])]
     public function addCategory(ValidatorInterface $validator, SerializerInterface $serializer, Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
