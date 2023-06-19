@@ -3,8 +3,15 @@
 namespace App\Controller\Api;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
+use JMS\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\entity\User;
+use App\Repository\UserRepository;
 
 class LoginController extends AbstractController
 {
@@ -20,5 +27,14 @@ class LoginController extends AbstractController
         ];
 
         return $this->json($userData);
+    }
+
+    #[Route(path:'/api/login', name: 'api_user_get', methods:['GET'])]
+    public function GetCategory(SerializerInterface $Serializer,UserRepository $userRepo , EntityManagerInterface $entityManager): JsonResponse
+    {
+        $user = $userRepo->findAll();
+        $jsonUser = $Serializer->serialize($user,"json");
+        
+        return new JsonResponse($jsonUser,Response::HTTP_OK,[],true);
     }
 }
