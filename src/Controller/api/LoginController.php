@@ -29,7 +29,7 @@ class LoginController extends AbstractController
         return $this->json($userData);
     }
 
-    #[Route(path:'/api/login', name: 'api_user_get', methods:['GET'])]
+    #[Route(path:'/api/user/', name: 'api_user_get', methods:['GET'])]
     public function GetCategory(SerializerInterface $Serializer,UserRepository $userRepo , EntityManagerInterface $entityManager): JsonResponse
     {
         $user = $userRepo->findAll();
