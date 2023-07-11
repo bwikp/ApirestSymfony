@@ -39,7 +39,6 @@ class UserController extends AbstractController
         $user = $Serializer->deserialize($request->getContent(),User::class,"json");            
         $userOne = $userRepository->find($id);
         $userOne->setEmail($user->getEmail());
-        $userOne->setRoles(["ROLE_ADMIN"]);
         $userOne->setPassword($userPasswordHasher->hashPassword($userOne,$user->getPassword()));
         $userOne->setFirstName($user->getFirstName());
         $userOne->setLastName($user->getLastName());
@@ -47,4 +46,14 @@ class UserController extends AbstractController
         $userOne = $Serializer->serialize($userOne,"json");
         return new JsonResponse($userOne,Response::HTTP_OK,[],true);
     }
+    #[Route('/api/user/{id}/admin', name: 'app_user_admin' , methods: ['PUT'])]
+        public function userAdmin($id,SerializerInterface $Serializer, UserRepository $userRepository,UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager,Request $request):JsonResponse
+        {
+            $user = $Serializer->deserialize($request->getContent(),User::class,"json");            
+            $userOne = $userRepository->find($id);
+            $userOne->becomeAdmin();
+            $entityManager->flush();
+            $userOne = $Serializer->serialize($userOne,"json");
+            return new JsonResponse($userOne,Response::HTTP_OK,[],true);
+        }
 }
