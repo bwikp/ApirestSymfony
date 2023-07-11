@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -19,10 +20,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    private ?string $email = null;
+    private $email = null;
 
-    #[ORM\Column]   
-    private ?array $roles = [];
+
+   
+    #[ORM\Column]
+    private $roles = array();
 
     /**
      * @var string The hashed password
@@ -67,24 +70,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @see UserInterface
      */
     public function getRoles(): array
-    {
+    {   
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        // $roles[] = array_push('ROLE_USER');
 
-        return array_unique($roles);
+        return array($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(array $roles): array
     {
         $this->roles = $roles;
-        return $this;
+        // dd($roles);
+        return $roles;
     }
+    
 
-    public function addRoles(string $roles):self
+    public function addRole(string $role)
     {
-        $this->roles[] = $roles;
-        return $this;
+        ;
+        $this->roles = array_push($this->roles,$role);
     }
     /**
      * @see PasswordAuthenticatedUserInterface

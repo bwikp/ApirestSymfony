@@ -35,11 +35,11 @@ class UserController extends AbstractController
 
     #[Route('/api/user/{id}/update', name: 'app_user_edit' , methods: ['PUT'])]
     public function UpdaterUser($id,SerializerInterface $Serializer, UserRepository $userRepository,UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager,Request $request): JsonResponse
-    {
+    {   
         $user = $Serializer->deserialize($request->getContent(),User::class,"json");            
         $userOne = $userRepository->find($id);
         $userOne->setEmail($user->getEmail());
-        $userOne->setRoles($user->getRoles());
+        $userOne->setRoles(["ROLE_ADMIN"]);
         $userOne->setPassword($userPasswordHasher->hashPassword($userOne,$user->getPassword()));
         $userOne->setFirstName($user->getFirstName());
         $userOne->setLastName($user->getLastName());
