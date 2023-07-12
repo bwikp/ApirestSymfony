@@ -46,12 +46,13 @@ class CategorieController extends AbstractController
 
     #[Route(path: '/api/categorie/{id}/delete', name: 'api_categorie_delete', methods: ['DELETE'])]
 
-    public function delCategory(SerializerInterface $Serializer, Category $categorie, EntityManagerInterface $entityManager): Response
+    public function delCategory($id,CategoryRepository $categoryRepository ,EntityManagerInterface $entityManager): Response
     {
+        $categorie = $categoryRepository->find($id);
         $entityManager->remove($categorie);
         $entityManager->flush();
 
-        return $this->json("sucessfuly delete");
+        return new JsonResponse("successfuly  deleted");
     }
 
     #[Route(path: '/api/categorie', name: 'api_categorie_read', methods: ['GET'])]

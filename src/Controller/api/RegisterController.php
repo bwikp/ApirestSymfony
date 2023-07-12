@@ -43,7 +43,7 @@ class RegisterController extends AbstractController
                                     ,$getPassWord
                                     
                             ),
-                            $newUser->addRoles("ROLE_USER")
+                            $newUser->setRoles('["ROLE_USER"]')
                             );
 
             $entityManager->persist($newUser);

@@ -81,18 +81,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $roles;
     }
 
-    public function setRoles(array $roles)
+    public function setRoles(string $role)
     {
 
-         $roles =  $this->getRoles();
-         $roles =  array("ROLE_USER");
-         $this->roles = $roles;
-
+         $this->roles = $role;
+        //  dd($role);
+        $roles = array($this->roles);
         //  dd($this->roles);
 
-         return $this;
+         return array($roles);
     }
     
+    public function addRoles(string $roles)
+    {
+        $this->roles[] = $roles;
+        dd($this->roles);
+        return $this->roles;
+    }
 
     public function becomeAdmin()
 {   
