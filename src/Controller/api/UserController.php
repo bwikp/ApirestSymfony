@@ -39,6 +39,7 @@ class UserController extends AbstractController
     {
         $user = $Serializer->deserialize($request->getContent(), User::class, "json");
         $userOne = $userRepository->find($id);
+        // dd($userOne);
         $userOne->setEmail($user->getEmail());
         $userOne->setPassword($userPasswordHasher->hashPassword($userOne, $user->getPassword()));
         $userOne->setFirstName($user->getFirstName());
@@ -50,13 +51,25 @@ class UserController extends AbstractController
     #[Route('/api/user/{id}/admin', name: 'app_user_admin', methods: ['PUT'])]
     public function userAdmin($id, SerializerInterface $Serializer, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, Request $request): JsonResponse
     {
-        $user = $Serializer->deserialize($request->getContent(), User::class, "json");
+        // $user = $Serializer->deserialize($request->getContent(), User::class, "json");
         $userOne = $userRepository->find($id);
         $userOne->becomeAdmin();
         $entityManager->flush();
         $userOne = $Serializer->serialize($userOne, "json");
         return new JsonResponse($userOne, Response::HTTP_OK, [], true);
     }
+
+    #[Route('/api/user/{id}/nlAdmin', name: 'app_user_nladmin', methods: ['PUT'])]
+    public function userRetro($id, SerializerInterface $Serializer, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, Request $request): JsonResponse
+    {
+        // $user = $Serializer->deserialize($request->getContent(), User::class, "json");
+        $userOne = $userRepository->find($id);
+        $userOne->setRoles('["ROLE_USER"]');
+        $entityManager->flush();
+        $userOne = $Serializer->serialize($userOne, "json");
+        return new JsonResponse($userOne, Response::HTTP_OK, [], true);
+    }
+
     #[Route('/api/user/{id}/delete', name: 'app_user_del', methods: ['DELETE'])]
     public function delUser($id, UserRepository $userRepository, EntityManagerInterface $entityManager): JsonResponse
     {
