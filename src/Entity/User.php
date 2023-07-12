@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -19,10 +20,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    private ?string $email = null;
+    private $email = null;
 
+
+   
     #[ORM\Column]
-    private array $roles = [];
+    private $roles = array();
 
     /**
      * @var string The hashed password
@@ -67,21 +70,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @see UserInterface
      */
     public function getRoles(): array
-    {
-        $roles = $this->roles;
+    {  
+        $roles = array($this->roles);
+
         // guarantee every user at least has ROLE_USER
+        // $roles[] = array_push($roles,'ROLE_USER');
         $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        // dd(array_unique($roles));
+        // dd($roles);
+        return $roles;
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(array $roles)
     {
-        $this->roles = $roles;
 
-        return $this;
+         $roles =  $this->getRoles();
+         $roles =  array("ROLE_USER");
+         $this->roles = $roles;
+
+        //  dd($this->roles);
+
+         return $this;
     }
+    
 
+    public function becomeAdmin()
+{   
+    // dd(array($this->roles));
+    $this->roles = '["ROLE_ADMIN"]';
+    $roles = array($this->roles);
+    // dd(array($this->roles));
+    return array($roles);
+}
     /**
      * @see PasswordAuthenticatedUserInterface
      */
@@ -89,7 +109,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->password;
     }
-
+   
+    
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -129,4 +150,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    
 }
