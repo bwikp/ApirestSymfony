@@ -39,6 +39,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    // private ?Bibliotheque $bibliotheque = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -155,6 +158,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+//     public function getBibliotheque(): ?Bibliotheque
+//     {
+//         return $this->bibliotheque;
+//     }
+
+//     public function setBibliotheque(Bibliotheque $bibliotheque): static
+//     {
+//         // set the owning side of the relation if necessary
+//         if ($bibliotheque->getUser() !== $this) {
+//             $bibliotheque->setUser($this);
+//         }
+
+//         $this->bibliotheque = $bibliotheque;
+
+//         return $this;
+//     }
 
     
 }
