@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\BibliothequeRepository;
+use App\Repository\BiblioRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: BibliothequeRepository::class)]
-class Bibliotheque
+#[ORM\Entity(repositoryClass: BiblioRepository::class)]
+class Biblio
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,8 +19,7 @@ class Bibliotheque
     #[ORM\Column(length: 255)]
     private ?string $note = null;
 
-    #[ORM\OneToOne(inversedBy: 'bibliotheque', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?user $user = null;
 
     public function getId(): ?int
@@ -57,7 +56,7 @@ class Bibliotheque
         return $this->user;
     }
 
-    public function setUser(user $user): static
+    public function setUser(?user $user): static
     {
         $this->user = $user;
 

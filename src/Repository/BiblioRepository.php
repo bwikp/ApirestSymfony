@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Bibliotheque;
+use App\Entity\Biblio;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Bibliotheque>
+ * @extends ServiceEntityRepository<Biblio>
  *
- * @method Bibliotheque|null find($id, $lockMode = null, $lockVersion = null)
- * @method Bibliotheque|null findOneBy(array $criteria, array $orderBy = null)
- * @method Bibliotheque[]    findAll()
- * @method Bibliotheque[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Biblio|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Biblio|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Biblio[]    findAll()
+ * @method Biblio[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class BibliothequeRepository extends ServiceEntityRepository
+class BiblioRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Bibliotheque::class);
+        parent::__construct($registry, Biblio::class);
     }
 
-    public function save(Bibliotheque $entity, bool $flush = false): void
+    public function save(Biblio $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class BibliothequeRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Bibliotheque $entity, bool $flush = false): void
+    public function remove(Biblio $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class BibliothequeRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Bibliotheque[] Returns an array of Bibliotheque objects
+//     * @return Biblio[] Returns an array of Biblio objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class BibliothequeRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Bibliotheque
+//    public function findOneBySomeField($value): ?Biblio
 //    {
 //        return $this->createQueryBuilder('b')
 //            ->andWhere('b.exampleField = :val')
