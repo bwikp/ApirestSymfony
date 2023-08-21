@@ -25,6 +25,7 @@ class UserController extends AbstractController
         return new JsonResponse($jsonUser, Response::HTTP_OK, [], true);
     }
 
+
     #[Route('/api/user/{id}', name: 'app_user_read1', methods: ['GET'])]
     public function getUserReadOne($id, SerializerInterface $Serializer, UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request): JsonResponse
     {
@@ -33,6 +34,17 @@ class UserController extends AbstractController
 
         return new JsonResponse($jsonUser, Response::HTTP_OK, [], true);
     }
+
+    #[Route('/api/users/{mail}', name: 'app_user_read33', methods: ['GET'])]
+    public function getUserReadMail($mail, SerializerInterface $Serializer, UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request)
+    {
+        $oneUser = $userRepository->findBy(['email' => $mail]);
+        $jsonUser = $Serializer->serialize($oneUser, "json");
+
+        return new JsonResponse($jsonUser, Response::HTTP_OK, [], true);
+    }
+
+   
 
     #[Route('/api/user/{id}/update', name: 'app_user_edit', methods: ['PUT'])]
     public function UpdaterUser($id, SerializerInterface $Serializer, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, Request $request): JsonResponse
