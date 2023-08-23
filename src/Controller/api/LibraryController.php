@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Entity\Library;
 
-class UserController extends AbstractController
+class libController extends AbstractController
 {
     #[Route('/api/lib', name: 'app_lib_read')]
     public function getlibAll(SerializerInterface $Serializer, LibraryRepository $libraryRepository, EntityManagerInterface $entityManager):JsonResponse
