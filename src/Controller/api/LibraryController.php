@@ -2,20 +2,21 @@
 
 namespace App\Controller\Api;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use App\Repository\LibraryRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\UserRepository;
 use JMS\Serializer\SerializerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Library;
 
-class libController extends AbstractController
+class LibraryController extends AbstractController
 {
-    #[Route('/api/lib', name: 'app_lib_read')]
+    #[Route('/api/lib', name: 'app_lib_read', methods: ['GET'])]
     public function getlibAll(SerializerInterface $Serializer, LibraryRepository $libraryRepository, EntityManagerInterface $entityManager):JsonResponse
         {
             $books = $libraryRepository->findAll();
@@ -24,4 +25,27 @@ class libController extends AbstractController
              return new JsonResponse($jsonLib,Response::HTTP_OK,[],true);
         }
 
+
+    #[Route('/api/lib/new/{id}', name:'app_lib_new',methods:['POST'])]
+    public function postNewLivre($id,ValidatorInterface $validator,UserRepository $userRepository ,SerializerInterface $serializer, Request $request, EntityManagerInterface $entityManager):JsonResponse
+        {
+            $lib = $serializer->deserialize($request->getContent(), Library::class, "json");
+
+            $error = $validator->validate($lib);
+
+        if ($error->count() > 0) {
+            return new JsonResponse($serializer->serialize($error, 'json'), Response::HTTP_BAD_REQUEST, [], true);
+        }
+
+        $user = $userRepository->find($id);
+
+        // $user->getId();
+
+        $lib->setUser($user);
+
+        $entityManager->persist($lib);
+        $entityManager->flush();
+
+        return new JsonResponse("sucessfuly added");
+        }
 }

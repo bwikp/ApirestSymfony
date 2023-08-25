@@ -23,6 +23,9 @@ class Library
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $livretitle = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Library
     public function setUser(?user $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getLivretitle(): ?string
+    {
+        return $this->livretitle;
+    }
+
+    public function setLivretitle(string $livretitle): static
+    {
+        $this->livretitle = $livretitle;
 
         return $this;
     }
