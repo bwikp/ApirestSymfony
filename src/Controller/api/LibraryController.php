@@ -53,8 +53,7 @@ class LibraryController extends AbstractController
     public function libDelete($id,$idlivre,LibraryRepository $libraryRepository,EntityManagerInterface $entityManager): Response
         {   
             $livreX = $libraryRepository->findOneBy(
-                ['user_id'=>$id],
-                ['idlivre'=>$idlivre] 
+                ['user'=>$id,'idlivre' =>$idlivre], 
             );
             $entityManager->remove($livreX);
             $entityManager->flush();
