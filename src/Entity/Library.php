@@ -16,7 +16,7 @@ class Library
     #[ORM\Column(length: 255)]
     private ?string $idlivre = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 1000, nullable: true)]
     private ?string $note = null;
 
     #[ORM\ManyToOne(inversedBy: 'lib')]
