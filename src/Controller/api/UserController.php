@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Entity\User;
-
 class UserController extends AbstractController
 {
     #[Route('/api/user', name: 'app_user_read', methods: ['GET'])]
@@ -30,8 +29,11 @@ class UserController extends AbstractController
     public function getUserReadOne($id, SerializerInterface $Serializer, UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request): JsonResponse
     {
         $oneUser = $userRepository->find($id);
+        $oneUser->setPassword('');
+        $oneUser->setRoles('');
         $jsonUser = $Serializer->serialize($oneUser, "json");
-
+        dd($oneUser);
+        // $jsonUser-
         return new JsonResponse($jsonUser, Response::HTTP_OK, [], true);
     }
 
