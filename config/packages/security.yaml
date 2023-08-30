@@ -57,7 +57,7 @@ security:
         - { path: ^/api/categorie, roles: ROLE_NO_ACCESS }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/register,  roles: PUBLIC_ACCESS }
-        - { path: ^/api/user/, roles: ROLE_USER }
+        # - { path: ^/api/user/, roles: ROLE_USER }
         - { path: ^/home,       roles: IS_AUTHENTICATED_FULLY }
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     

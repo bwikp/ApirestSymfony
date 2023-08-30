@@ -49,4 +49,16 @@ class LibraryController extends AbstractController
 
         return new JsonResponse("sucessfuly added");
         }
+    #[Route('/api/lib/delete/{id}/{idlivre}', name: 'app_lib_delete', methods:['DELETE'])]
+    public function libDelete($id,$idlivre,LibraryRepository $libraryRepository,EntityManagerInterface $entityManager): Response
+        {   
+            $livreX = $libraryRepository->findOneBy(
+                ['user'=>$id,'idlivre' =>$idlivre], 
+            );
+            $entityManager->remove($livreX);
+            $entityManager->flush();
+
+            return new JsonResponse(" the book has been deleted");
+        }
+        
 }
