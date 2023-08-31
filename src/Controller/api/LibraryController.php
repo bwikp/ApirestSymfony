@@ -20,19 +20,23 @@ class LibraryController extends AbstractController
     public function getlibAll(SerializerInterface $Serializer, LibraryRepository $libraryRepository, EntityManagerInterface $entityManager):JsonResponse
         {
             $books = $libraryRepository->findAll();
+            
             $jsonLib = $Serializer->serialize($books,"json");
 
              return new JsonResponse($jsonLib,Response::HTTP_OK,[],true);
         }
 
-    #[Route('/api/lib/{id}/{idlivre}')]
+    #[Route('/api/lib/{id}/{idlivre}',name:"app_lib_read1",methods:["GET"])]
     public function getOneLib($id,$idlivre,SerializerInterface $Serializer, LibraryRepository $libraryRepository, EntityManagerInterface $entityManager):Response
         {
             $livreX = $libraryRepository->findOneBy(
                 ['user'=>$id,'idlivre' =>$idlivre]
             );
+            $user =  $livreX->getUser();
+            $user->setPassword('');
+            $user->setRoles('');
             $jsonLib = $Serializer->serialize($livreX,"json");
-
+            
              return new JsonResponse($jsonLib,Response::HTTP_OK,[],true);
         }
     #[Route('/api/lib/new/{id}', name:'app_lib_new',methods:['POST'])]
