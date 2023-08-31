@@ -20,12 +20,25 @@ class LibraryController extends AbstractController
     public function getlibAll(SerializerInterface $Serializer, LibraryRepository $libraryRepository, EntityManagerInterface $entityManager):JsonResponse
         {
             $books = $libraryRepository->findAll();
+            
             $jsonLib = $Serializer->serialize($books,"json");
 
              return new JsonResponse($jsonLib,Response::HTTP_OK,[],true);
         }
 
-
+    #[Route('/api/lib/{id}/{idlivre}',name:"app_lib_read1",methods:["GET"])]
+    public function getOneLib($id,$idlivre,SerializerInterface $Serializer, LibraryRepository $libraryRepository, EntityManagerInterface $entityManager):Response
+        {
+            $livreX = $libraryRepository->findOneBy(
+                ['user'=>$id,'idlivre' =>$idlivre]
+            );
+            $user =  $livreX->getUser();
+            $user->setPassword('');
+            $user->setRoles('');
+            $jsonLib = $Serializer->serialize($livreX,"json");
+            
+             return new JsonResponse($jsonLib,Response::HTTP_OK,[],true);
+        }
     #[Route('/api/lib/new/{id}', name:'app_lib_new',methods:['POST'])]
     public function postNewLivre($id,ValidatorInterface $validator,UserRepository $userRepository ,SerializerInterface $serializer, Request $request, EntityManagerInterface $entityManager):JsonResponse
         {
@@ -60,5 +73,17 @@ class LibraryController extends AbstractController
 
             return new JsonResponse(" the book has been deleted");
         }
-        
+ 
+    #[Route('/api/lib/note/{id}/{idlivre}', name:'app_lib_edit', methods:['PUT'] )]
+    public function editNote($id,$idlivre,SerializerInterface $Serializer,Request $request,LibraryRepository $libraryRepository,EntityManagerInterface $entityManager):JsonResponse
+        {   $userNote = $Serializer->deserialize($request->getContent(),Library::class,"json");
+
+            $livreX =  $libraryRepository->findOneBy(
+                ['user'=>$id,'idlivre' =>$idlivre],
+            );
+            $livreX->setNote($userNote->getNote());
+            $entityManager->flush();
+            $livreX = $Serializer->serialize($userNote,"json");
+            return new JsonResponse($livreX,Response::HTTP_OK,[],true);
+        }
 }

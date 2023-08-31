@@ -32,7 +32,7 @@ class UserController extends AbstractController
         $oneUser->setPassword('');
         $oneUser->setRoles('');
         $jsonUser = $Serializer->serialize($oneUser, "json");
-        dd($oneUser);
+        // dd($oneUser);
         // $jsonUser-
         return new JsonResponse($jsonUser, Response::HTTP_OK, [], true);
     }
