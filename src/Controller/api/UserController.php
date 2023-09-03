@@ -15,7 +15,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Entity\User;
 class UserController extends AbstractController
 {
-    #[Route('/api/user', name: 'app_user_read', methods: ['GET'])]
+    #[Route('/api/userAll', name: 'app_user_read', methods: ['GET'])]
     public function getUserRead(SerializerInterface $Serializer, UserRepository $userRepository, EntityManagerInterface $entityManager): JsonResponse
     {
         $user = $userRepository->findAll();

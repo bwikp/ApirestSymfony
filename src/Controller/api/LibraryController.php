@@ -16,7 +16,7 @@ use App\Entity\Library;
 
 class LibraryController extends AbstractController
 {
-    #[Route('/api/lib', name: 'app_lib_read', methods: ['GET'])]
+    #[Route('/api/libAll', name: 'app_lib_read', methods: ['GET'])]
     public function getlibAll(SerializerInterface $Serializer, LibraryRepository $libraryRepository, EntityManagerInterface $entityManager):JsonResponse
         {
             $books = $libraryRepository->findAll();
