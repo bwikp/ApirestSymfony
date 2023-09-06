@@ -26,6 +26,9 @@ class Library
     #[ORM\Column(length: 255)]
     private ?string $livretitle = null;
 
+    #[ORM\ManyToOne(inversedBy: 'libraries')]
+    private ?category $category = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class Library
     public function setLivretitle(string $livretitle): static
     {
         $this->livretitle = $livretitle;
+
+        return $this;
+    }
+
+    public function getCategory(): ?category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }
