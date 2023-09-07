@@ -27,7 +27,7 @@ class Library
     private ?string $livretitle = null;
 
     #[ORM\ManyToOne(inversedBy: 'libraries')]
-    private ?category $category = null;
+    private ?Category $category = null;
 
     public function getId(): ?int
     {
