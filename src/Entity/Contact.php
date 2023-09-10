@@ -22,6 +22,9 @@ class Contact
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $linkedin = null;
 
+    #[ORM\OneToOne(inversedBy: 'contact', cascade: ['persist', 'remove'])]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class Contact
     public function setLinkedin(?string $linkedin): static
     {
         $this->linkedin = $linkedin;
+
+        return $this;
+    }
+
+    // public function getUser(): ?User
+    // {
+    //     return $this->user;
+    // }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

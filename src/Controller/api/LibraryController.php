@@ -33,8 +33,7 @@ class LibraryController extends AbstractController
                 ['user'=>$id,'idlivre' =>$idlivre]
             );
             $user =  $livreX->getUser();
-            $user->setPassword('');
-            $user->setRoles('');
+            $livreX->setUser(NULL);
             $jsonLib = $Serializer->serialize($livreX,"json");
             
              return new JsonResponse($jsonLib,Response::HTTP_OK,[],true);
