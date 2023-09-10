@@ -53,13 +53,13 @@ security:
     access_control:
         #
         # the 'ips' option supports IP addresses and subnet masks
-        - { path: ^/api/categorie, roles: PUBLIC_ACCESS, ips: [127.0.0.1, ::1, 192.168.0.1/24] }
-        - { path: ^/api/categorie, roles: ROLE_NO_ACCESS }
+        # - { path: ^/api/categorie, roles: PUBLIC_ACCESS, ips: [127.0.0.1, ::1, 192.168.0.1/24] }
+        - { path: ^/api/categorie, roles: ROLE_USER }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/register,  roles: PUBLIC_ACCESS }
         - { path: ^/api/userAll, roles: ROLE_ADMIN }
         - { path: ^/api/libAll, roles: ROLE_ADMIN }
-        - { path: ^/api/contact/, roles: PUBLIC_ACCESS}
+        - { path: ^/api/contact/, roles: ROLE_USER}
         - { path: ^/api/user/, roles: ROLE_USER }
         - { path: ^/home,       roles: IS_AUTHENTICATED_FULLY }
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
